@@ -41,7 +41,7 @@ pipeline {
             }
         }
 
-        stage('Trivy Scan') {
+        stage('Trivy Scan 🔒') {
             steps {
                 sh '''
                     trivy image \
