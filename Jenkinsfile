@@ -23,7 +23,10 @@ pipeline {
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=spring-petclinic'
+                    sh '''
+                        mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                        -Dsonar.projectKey=spring-petclinic
+                    '''
                 }
             }
         }
