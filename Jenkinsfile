@@ -41,6 +41,17 @@ pipeline {
             }
         }
 
+        stage('Trivy Scan') {
+            steps {
+                sh '''
+                    trivy image \
+                    --severity HIGH,CRITICAL \
+                    --exit-code 1 \
+                    spring-petclinic:${VERSION}
+                '''
+            }
+        }
+
         stage('Docker Run') {
             steps {
                 sh '''
