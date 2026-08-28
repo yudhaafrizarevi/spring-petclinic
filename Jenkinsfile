@@ -44,6 +44,8 @@ pipeline {
         stage('Trivy Scan 🔒') {
             steps {
                 sh '''
+                    export TMPDIR=/var/tmp/trivy
+                    
                     trivy image \
                     --severity HIGH,CRITICAL \
                     --exit-code 1 \
