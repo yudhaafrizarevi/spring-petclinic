@@ -6,6 +6,10 @@ pipeline {
         maven 'Maven-3.9'
     }
 
+    environment {
+        VERSION = "${env.TAG_NAME ?: 'dev'}"
+    }
+
     stages {
 
         stage('Checkout') {
@@ -33,7 +37,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t spring-petclinic:latest .'
+                sh 'docker build -t spring-petclinic:${VERSION} .'
             }
         }
 
@@ -42,10 +46,11 @@ pipeline {
                 sh '''
                     docker stop spring-petclinic || true
                     docker rm spring-petclinic || true
+
                     docker run -d \
                         --name spring-petclinic \
                         -p 8081:8080 \
-                        spring-petclinic:latest
+                        spring-petclinic:${VERSION}
                 '''
             }
         }
